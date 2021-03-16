@@ -1,9 +1,11 @@
 package com.develogical.camera;
 
 public class Camera {
+    Sensor _sensor;
+
 
     public Camera(Sensor sensor) {
-
+        _sensor = sensor;
     }
 
     public void pressShutter() {
@@ -11,7 +13,7 @@ public class Camera {
     }
 
     public void powerOn() {
-        // not implemented
+        _sensor.powerUp();
     }
 
     public void powerOff() {
