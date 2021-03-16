@@ -69,6 +69,25 @@ public class CameraTest {
         verify(sensor, Mockito.times(0)).powerDown();
     }
 
+    @Test
+    public void powerDownOnceFinishedWriting() {
+        MemoryCard memorycard = mock(MemoryCard.class);
+        Sensor sensor  = mock(Sensor.class);
+        Camera underTest = new Camera(sensor, memorycard);
+        byte[] dummyData = new byte[]{
+                1,1,1,0,0,0,0,0,1
+        };
+        given(sensor.readData()).willReturn(dummyData);
+        underTest.powerOn();
+        underTest.pressShutter();
+        underTest.powerOff();
+        ArgumentCaptor<WriteCompleteListener> writeCompleteListenerArgumentCaptor = ArgumentCaptor.forClass(WriteCompleteListener.class);
+        verify(memorycard).write(eq(dummyData), writeCompleteListenerArgumentCaptor.capture());
+        writeCompleteListenerArgumentCaptor.getValue().writeComplete();
+        // some how we need to say that writing has finsihed
+        verify(sensor).powerDown();
+    }
+
     //@Captor
     //ArgumentCaptor<dummyData> dataCaptor;
 }
