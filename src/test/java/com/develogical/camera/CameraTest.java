@@ -88,6 +88,5 @@ public class CameraTest {
         verify(sensor).powerDown();
     }
 
-    //@Captor
-    //ArgumentCaptor<dummyData> dataCaptor;
+    //TODO: another test to verify that camera can take multiple photos
 }

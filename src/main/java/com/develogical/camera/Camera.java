@@ -32,7 +32,7 @@ public class Camera implements WriteCompleteListener {
 
     @Override
     public void writeComplete() {
-
+        _sensor.powerDown();
     }
 }
 
