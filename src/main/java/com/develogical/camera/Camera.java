@@ -2,10 +2,11 @@ package com.develogical.camera;
 
 public class Camera {
     Sensor _sensor;
+    MemoryCard _memorycard;
 
-
-    public Camera(Sensor sensor) {
+    public Camera(Sensor sensor, MemoryCard memorycard) {
         _sensor = sensor;
+        _memorycard = memorycard;
     }
 
     public void pressShutter() {
