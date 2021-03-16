@@ -2,6 +2,7 @@ package com.develogical.camera;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -38,5 +39,15 @@ public class CameraTest {
         underTest.powerOn();
         underTest.pressShutter();
         verify(memorycard).write(eq(dummyData), any());
+    }
+
+    @Test
+    public void pressingTheShutterDoesNothingWhenOff() {
+        MemoryCard memorycard = mock(MemoryCard.class);
+        Sensor sensor  = mock(Sensor.class);
+        Camera underTest = new Camera(sensor, memorycard);
+        underTest.powerOff();
+        underTest.pressShutter();
+        verify(sensor, Mockito.times(0)).readData();
     }
 }
