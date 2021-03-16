@@ -3,6 +3,7 @@ package com.develogical.camera;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 public class CameraTest {
@@ -29,11 +30,13 @@ public class CameraTest {
     public void copyDataFromSensorToMemoryCard() {
         MemoryCard memorycard = mock(MemoryCard.class);
         Sensor sensor  = mock(Sensor.class);
-        WriteCompleteListener writeData = mock(WriteCompleteListener.class);
+        byte[] dummyData = new byte[]{
+                1,1,1,0,0,0,0,0
+        };
+        given(sensor.readData()).willReturn(dummyData);
         Camera underTest = new Camera(sensor, memorycard);
         underTest.powerOn();
         underTest.pressShutter();
-        byte[] input = verify(sensor).readData();
-        verify(memorycard).write(input, writeData);
+        verify(memorycard).write(eq(dummyData), any());
     }
 }
